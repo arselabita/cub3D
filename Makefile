@@ -6,7 +6,7 @@
 #    By: abita <abita@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/02/11 14:58:16 by abita             #+#    #+#              #
-#    Updated: 2026/02/11 15:41:46 by abita            ###   ########.fr        #
+#    Updated: 2026/02/11 15:48:31 by abita            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,6 +18,8 @@ CFLAGS = -Wall -Werror -Wextra
 LIBFT_DIR   = inc/Libft
 LIBFT       = $(LIBFT_DIR)/libft.a
 INCLUDES    = -I inc -I $(LIBFT_DIR)
+
+LIBS = -lmlx -lX11 -lXext -lm
 
 SRC_DIR     = src
 OBJ_DIR     = obj
@@ -40,7 +42,7 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c inc/cub.h
 
 
 $(NAME): $(OBJS)
-	@$(CC) $(CFLAGS) $(OBJS) $(LIBFT) -o $(NAME)
+	@$(CC) $(CFLAGS) $(OBJS) $(LIBFT) $(LIBS) -o $(NAME)
 
 
 $(LIBFT):
