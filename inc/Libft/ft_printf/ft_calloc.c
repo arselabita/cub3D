@@ -1,19 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
+/*   By: abita <abita@student.42vienna.com>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/02/05 15:54:05 by abita             #+#    #+#             */
-/*   Updated: 2026/02/05 16:17:03 by abita            ###   ########.fr       */
+/*   Created: 2025/04/29 10:52:56 by abita             #+#    #+#             */
+/*   Updated: 2025/04/29 10:53:03 by abita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "inc/cub.h"
+#include "ft_printf.h"
 
-int main()
+void	*ft_calloc(size_t count, size_t size)
 {
-	
-	return (0);
+	void	*ptr;
+
+	if (count && size && count > SIZE_MAX / size)
+		return (NULL);
+	ptr = malloc(count * size);
+	if (!ptr)
+		return (NULL);
+	ft_bzero(ptr, count * size);
+	return (ptr);
 }
