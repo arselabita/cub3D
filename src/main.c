@@ -6,7 +6,7 @@
 /*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 15:54:05 by abita             #+#    #+#             */
-/*   Updated: 2026/02/11 15:46:25 by abita            ###   ########.fr       */
+/*   Updated: 2026/02/11 16:02:58 by abita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,5 +19,6 @@ int main(int argc, char **argv)
 	t_data		data;
 
 	init_window_and_display(&data);
+	mlx_loop_helper(&data);
 	return (0);
 }

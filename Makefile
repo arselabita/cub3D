@@ -6,7 +6,7 @@
 #    By: abita <abita@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/02/11 14:58:16 by abita             #+#    #+#              #
-#    Updated: 2026/02/11 15:48:31 by abita            ###   ########.fr        #
+#    Updated: 2026/02/11 16:01:58 by abita            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ LIBS = -lmlx -lX11 -lXext -lm
 SRC_DIR     = src
 OBJ_DIR     = obj
 
-SRC = \
+SRCS = \
 	  main.c \
 	  mlx/window.c\
 
