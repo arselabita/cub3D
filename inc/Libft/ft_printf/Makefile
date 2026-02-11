@@ -6,7 +6,7 @@
 #    By: abita <abita@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/12 20:55:11 by abita             #+#    #+#              #
-#    Updated: 2026/02/11 15:23:27 by abita            ###   ########.fr        #
+#    Updated: 2026/02/11 19:12:21 by abita            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,19 +26,15 @@ NAME = libftprintf.a
 all: $(NAME)
 
 $(NAME): $(OFILES)
-		ar rcs $(NAME) $(OFILES)
+		@ar rcs $(NAME) $(OFILES)
 
 clean:
-		rm -f $(OFILES)
+		@rm -f $(OFILES)
 
 fclean: clean
-		rm -f $(NAME)
+		@rm -f $(NAME)
 
 re: fclean all
 
-run: $(NAME)
-	$(CC) ft_printf.c libftprintf.a -o ./run.out
-	./run.out
-
 .PHONY: all clean fclean re
-SILENT:
+.SILENT:

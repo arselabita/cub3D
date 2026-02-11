@@ -3,20 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abita <abita@student.42vienna.com>         +#+  +:+       +#+        */
+/*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 13:56:33 by abita             #+#    #+#             */
-/*   Updated: 2025/05/26 20:06:27 by abita            ###   ########.fr       */
+/*   Updated: 2026/02/11 19:43:51 by abita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
-
+#include "libft.h"
+#include <stdio.h>
 static char	*line_to_return(char *leftovers)
 {
 	char	*print_line;
 	size_t	i;
 	size_t	j;
+	size_t	remaining;
 
 	i = 0;
 	if (!leftovers)
@@ -25,7 +26,8 @@ static char	*line_to_return(char *leftovers)
 		i++;
 	if (leftovers[i] == '\n')
 		i++;
-	print_line = (char *)ft_calloc(ft_strlen(leftovers) - i + 1, sizeof(char));
+	remaining = ft_strlen(leftovers) - i;
+	print_line = (char *)ft_calloc(remaining + 1, sizeof(char));
 	if (!print_line)
 		return (free(leftovers), NULL);
 	j = 0;
@@ -67,20 +69,27 @@ char	*helper_for_gnl(char *leftovers, int fd, char *buffer)
 	char		*temp;
 
 	bytes_to_read = 1;
-	while (!ft_strchr(leftovers, '\n') && bytes_to_read > 0)
+	while (bytes_to_read > 0)
 	{
+		if (leftovers != NULL)
+		{
+			if (ft_strchr(leftovers, '\n') != NULL)
+				break ;
+		}
 		bytes_to_read = read(fd, buffer, BUFFER_SIZE);
 		if (bytes_to_read == -1)
 			return (free(buffer), free (leftovers), NULL);
 		buffer[bytes_to_read] = '\0';
-		temp = ft_strjoin (leftovers, buffer);
+		if (leftovers == NULL)
+			temp = ft_strdup(buffer);
+		else
+			temp = ft_strjoin (leftovers, buffer);
 		free(leftovers);
 		leftovers = temp;
 		if (leftovers == NULL)
 			break ;
 	}
-	free(buffer);
-	return (leftovers);
+	return (free(buffer), leftovers);
 }
 
 char	*get_next_line(int fd)
@@ -105,43 +114,43 @@ char	*get_next_line(int fd)
 		return (free(next_line), NULL);
 	return (next_line);
 }
-/*
-#include <stdio.h>
-#include <fcntl.h>
 
-int main()
-{
-     int     file_descriptor;
-     char    *next_line;
-     int     i;
+// #include <stdio.h>
+// #include <fcntl.h>
 
-     i = 0;
-     file_descriptor = open("testfile", O_RDONLY);
-     if (file_descriptor == -1)
-     {
-         printf("Error opening the file");
-         return (1);
-     }
-    //  while (1)
-    //  {
-    //      next_line = get_next_line(file_descriptor);
-    //      if (next_line == NULL)
-    //          break ;
-    //      i++;
-    //      printf("[%d]: '%s'\n", i, next_line);
-    //      free (next_line);
-    //      next_line = NULL;
-    //  }
+// int main()
+// {
+//      int     file_descriptor;
+//      char    *next_line;
+//      int     i;
 
-	 next_line = get_next_line(file_descriptor);
-	 printf("[%d]: '%s'\n", i, next_line);
-	 free (next_line);
-	 next_line = NULL;
-	 	 next_line = get_next_line(file_descriptor);
-	 printf("[%d]: '%s'\n", i, next_line);
-	 free (next_line);
-	 next_line = NULL;
+//      i = 0;
+//      file_descriptor = open("testfile", O_RDONLY);
+//      if (file_descriptor == -1)
+//      {
+//          printf("Error opening the file");
+//          return (1);
+//      }
+//     //  while (1)
+//     //  {
+//     //      next_line = get_next_line(file_descriptor);
+//     //      if (next_line == NULL)
+//     //          break ;
+//     //      i++;
+//     //      printf("[%d]: '%s'\n", i, next_line);
+//     //      free (next_line);
+//     //      next_line = NULL;
+//     //  }
 
-     close(file_descriptor); // Close the file
-     return (0);
-}*/
+// 	 next_line = get_next_line(file_descriptor);
+// 	 printf("[%d]: '%s'\n", i, next_line);
+// 	 free (next_line);
+// 	 next_line = NULL;
+// 	 	 next_line = get_next_line(file_descriptor);
+// 	 printf("[%d]: '%s'\n", i, next_line);
+// 	 free (next_line);
+// 	 next_line = NULL;
+
+//      close(file_descriptor); // Close the file
+//      return (0);
+// }

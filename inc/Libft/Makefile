@@ -6,7 +6,7 @@
 #    By: abita <abita@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/03 21:32:48 by abita             #+#    #+#              #
-#    Updated: 2026/02/11 15:18:59 by abita            ###   ########.fr        #
+#    Updated: 2026/02/11 20:01:33 by abita            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,6 +26,9 @@ AR              := ar rcs
 RM              := rm -f
 RMDIR           := rm -rf
 MKDIR           := mkdir -p
+
+GREEN = \033[0;32m
+RESET = \033[0m
 
 CFILES = \
 	ft_atof.c \
@@ -65,16 +68,18 @@ CFILES = \
 	ft_putnbr_fd.c \
 	ft_atof.c \
 	ft_strcmp.c \
-	get_next_line/get_next_line.c
+	ft_isspace.c \
+	get_next_line.c
 
 OFILES = $(CFILES:.c=.o)
 
 
 all: $(NAME)
+	@echo "$(GREEN)Building Libft...$(RESET)"
 
 $(NAME): $(OFILES)
-	@$(AR) $(NAME) $(OBJ)
-	@$(MAKE) -C $(PRINTF)
+	@$(AR) $(NAME) $(OFILES)
+	@$(MAKE) -s -C $(PRINTF)
 	@$(MKDIR) $(OBJ_DIR)
 	@cd $(OBJ_DIR) && ar -x ../$(PRINTF_BINARY)
 	@$(AR) $(NAME) $(OBJ_DIR)/*.o
@@ -82,15 +87,18 @@ $(NAME): $(OFILES)
 
 
 clean:
-	@$(RM) $(OBJ)
-	@$(MAKE) -C $(PRINTF) clean
+	@echo "$(GREEN)Cleaning object files...$(RESET)"
+	@$(RM) $(OFILES)
+	@$(MAKE) -s -C $(PRINTF) clean
 	@$(RMDIR) $(OBJ_DIR)
 
-fclean: clean 
+fclean: clean
+	@echo "$(GREEN)Full clean...$(RESET)"
 	@$(RM) $(NAME)
-	@$(MAKE) -C $(PRINTF) fclean
+	@$(MAKE) -s -C $(PRINTF) fclean
 
 re: fclean all
+	@echo "$(GREEN)Rebuilding done...$(RESET)"
 
 .PHONY: all clean fclean re
-SILENT:
+.SILENT:

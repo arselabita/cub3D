@@ -1,20 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   keys.c                                             :+:      :+:    :+:   */
+/*   ft_isspace.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/02/11 15:33:15 by abita             #+#    #+#             */
-/*   Updated: 2026/02/11 19:19:55 by abita            ###   ########.fr       */
+/*   Created: 2026/02/11 20:00:50 by abita             #+#    #+#             */
+/*   Updated: 2026/02/11 20:00:55 by abita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub.h"
+#include "libft.h"
 
-int	keyhandler(int key, t_data *data)
+int	ft_isspace(char c)
 {
-	if (key == ESC)
- 		ft_exit(data);
- 	return (0);
+	if (c == ' ' || (c >= 9 && c <= 13))
+		return (1);
+	return (0);
 }
