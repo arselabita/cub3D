@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abita <abita@student.42vienna.com>         +#+  +:+       +#+        */
+/*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 14:35:54 by abita             #+#    #+#             */
-/*   Updated: 2025/05/17 14:35:56 by abita            ###   ########.fr       */
+/*   Updated: 2026/02/11 15:56:17 by abita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,5 @@
 # endif
 
 char	*get_next_line(int fd);
-void	*ft_calloc(size_t count, size_t size);
-void	ft_strcpy(char *dest, const char *src);
-size_t	ft_strlen(const char *str);
-char	*ft_strchr(const char *s, int c);
-char	*ft_strjoin(char *s1, char *s2);
 
 #endif

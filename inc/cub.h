@@ -6,7 +6,7 @@
 /*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 16:15:08 by abita             #+#    #+#             */
-/*   Updated: 2026/02/11 15:44:12 by abita            ###   ########.fr       */
+/*   Updated: 2026/02/11 16:01:32 by abita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ typedef struct s_data
 void		init_window_and_display(t_data *data);
 void		my_pixel_put(t_img img, int x, int y, int color);
 void		mlx_loop_helper(t_data *data);
-int			keyhandler(int key, t_data *data);
+// int			keyhandler(int key, t_data *data);
 int			ft_exit(t_data *data);
 int			ft_exit_error(t_data *data);
 
