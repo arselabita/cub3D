@@ -6,7 +6,7 @@
 /*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 16:15:08 by abita             #+#    #+#             */
-/*   Updated: 2026/02/11 19:51:06 by abita            ###   ########.fr       */
+/*   Updated: 2026/02/12 14:49:07 by abita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,24 +20,33 @@
 # include <sys/time.h>
 # include <limits.h>
 # include <math.h>
+# include <stdbool.h>
 # include "Libft/libft.h"
 
 // coloring error
-# define RED "\033[31m"
+# define RED         "\033[31m"
 # define RESET_COLOR "\033[0m"
 
 // scaling
-# define WIDTH 400
+# define WIDTH  400
 # define HEIGHT 400
 
 // arrow keys
-# define LEFT 65361
-# define UP 65362
+# define LEFT  65361
+# define UP    65362
 # define RIGHT 65363
-# define DOWN 65364
+# define DOWN  65364
 
 // escape keys
-# define ESC 65307
+# define ESC   65307
+
+// map
+# define WALL  '1'
+# define SPACE '0'
+# define NORTH 'N'
+# define SOUTH 'S'
+# define EAST  'E'
+# define WEST  'W'
 
 typedef enum e_return_values
 {

@@ -6,7 +6,7 @@
 /*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 15:28:55 by abita             #+#    #+#             */
-/*   Updated: 2026/02/11 16:56:12 by abita            ###   ########.fr       */
+/*   Updated: 2026/02/12 15:22:01 by abita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	init_window_and_display(t_data *data)
 	data->mlx = mlx_init();
 	if (!data->mlx)
 		exit (EXIT_FAILURE);
-	data->win = mlx_new_window(data->mlx, WIDTH, HEIGHT, "The Fract-ol");
+	data->win = mlx_new_window(data->mlx, WIDTH, HEIGHT, "Cub3D");
 	if (!data->win)
 		return (mlx_destroy_display(data->mlx), free(data->mlx));
 	data->img.img = mlx_new_image(data->mlx, WIDTH, HEIGHT);

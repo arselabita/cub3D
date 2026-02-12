@@ -6,7 +6,7 @@
 /*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 15:54:05 by abita             #+#    #+#             */
-/*   Updated: 2026/02/11 21:09:43 by abita            ###   ########.fr       */
+/*   Updated: 2026/02/12 16:02:22 by abita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,16 @@ int is_valid_row(char *line)
 	int i;
 	int len;
 
-	if (!line && line[0] == '\0')
+	if (!line || line[0] == '\0')
 		return (0);
 	i = 0;
 	len = 0;
 	while (line[i] && line[i] != '\n')
 		i++;
 	len = i;
-	if (line[0] != '1')
+	if (line[0] != WALL)
 		return (0);
-	if (line[len - 1] != '1')
+	if (line[len - 1] != WALL)
 		return (0);
 	return (1);
 }
@@ -38,7 +38,7 @@ int is_all_ones(char *last_map_line)
 	i = 0;
 	while(last_map_line[i])
 	{
-		if (last_map_line[i] != '1' && !ft_isspace(last_map_line[i]))
+		if (last_map_line[i] != WALL && !ft_isspace(last_map_line[i]))
 			return (0);
 		i++;
 	}
@@ -52,6 +52,8 @@ int open_file(void)
 	char		*first_map_line;
 	char		*last_map_line;
 	int			is_first_line;
+	int			error;
+	char		*tmp;
 
 	fd = open("map.cub", O_RDONLY);
 	if (fd == -1)
@@ -62,6 +64,7 @@ int open_file(void)
 	first_map_line = NULL;
 	last_map_line = NULL;
 	is_first_line = 1;
+	error = 0;
 	
 	while ((next_line = get_next_line(fd)) != NULL)
 	{
@@ -91,24 +94,37 @@ int open_file(void)
 			free(last_map_line);
 			last_map_line = ft_strdup(&next_line[i]);
 			if (!is_valid_row(&next_line[i]))
-				return (print_error("ERROR: Row must start and end with 1\n"),
-					free(first_map_line), free(last_map_line), free(next_line), 
-					close(fd), EXIT_FAILURE);	
+			{
+				error = 1;
+				free(next_line);
+				break ;
+			}
 		}
 		printf("%s\n", next_line);
 		free(next_line);
 	}
 	close (fd);
+	// need to clean the static var from gnl so i leave it to clean it
+	if (!error)
+	{
+		if (first_map_line && !is_all_ones(first_map_line))
+			error = 1;
+		if (last_map_line && !is_all_ones(last_map_line))
+			error = 1;
+	}
 	////////////////
 	// here i validate the first and last rows to check if it contains 1 or also spaces,
 	// if it contains smth else than it frees and displays error, that the map is not valid
 	////////////////
-	if (first_map_line && !is_all_ones(first_map_line))
-		return (print_error("ERROR: First row must be all 1\n"),
-			free(first_map_line), free(last_map_line), EXIT_FAILURE);
-	if (last_map_line && !is_all_ones(last_map_line))
-		return (print_error("ERROR: Last row must be all 1\n"),
-			free(first_map_line), free(last_map_line), EXIT_FAILURE);
+	if (error)
+	{
+		while ((tmp = get_next_line(fd)) != NULL)
+			free(tmp);
+		print_error("ERROR: Invalid map\n");
+		free(first_map_line);
+		free(last_map_line);
+		return (EXIT_FAILURE);
+	}
 	free(first_map_line);
 	free(last_map_line);
 	printf("Map validation passed\n");

@@ -6,14 +6,14 @@
 #    By: abita <abita@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/02/11 14:58:16 by abita             #+#    #+#              #
-#    Updated: 2026/02/11 19:18:31 by abita            ###   ########.fr        #
+#    Updated: 2026/02/12 14:58:01 by abita            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = cub
 
 CC = cc 
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS = -Wall -Werror -Wextra -g
 
 LIBFT_DIR   = inc/Libft
 LIBFT       = $(LIBFT_DIR)/libft.a

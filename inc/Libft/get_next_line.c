@@ -6,12 +6,12 @@
 /*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/17 13:56:33 by abita             #+#    #+#             */
-/*   Updated: 2026/02/11 19:43:51 by abita            ###   ########.fr       */
+/*   Updated: 2026/02/12 15:39:45 by abita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <stdio.h>
+
 static char	*line_to_return(char *leftovers)
 {
 	char	*print_line;
@@ -98,7 +98,9 @@ char	*get_next_line(int fd)
 	char		*next_line;
 	static char	*leftovers;
 
-	if (fd < 0 || BUFFER_SIZE <= 0)
+	if (fd == -1)
+		return (free(leftovers), leftovers = NULL, NULL);
+	if (BUFFER_SIZE <= 0)
 		return (NULL);
 	buffer = (char *)ft_calloc((BUFFER_SIZE + 1), sizeof(char));
 	if (!buffer)
