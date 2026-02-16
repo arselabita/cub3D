@@ -6,7 +6,7 @@
 /*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 16:15:08 by abita             #+#    #+#             */
-/*   Updated: 2026/02/12 14:49:07 by abita            ###   ########.fr       */
+/*   Updated: 2026/02/12 20:48:22 by abita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,15 @@ typedef struct s_data
 	int			i;
 
 }	t_data;
+
+typedef struct s_line
+{
+	char		*first_map_line;
+	char		*last_map_line;
+	int			is_first_line;
+	int			error;
+	char		*tmp;
+} t_line;
 
 /* ************************************************************************** */
 /*                                   MLX Window                               */

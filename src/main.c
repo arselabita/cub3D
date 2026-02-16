@@ -6,16 +6,41 @@
 /*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 15:54:05 by abita             #+#    #+#             */
-/*   Updated: 2026/02/12 16:02:22 by abita            ###   ########.fr       */
+/*   Updated: 2026/02/16 12:57:45 by abita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub.h"
 
-int is_valid_row(char *line)
+int valid_input(char line)
 {
+	return (line == SPACE || line == WALL || 
+			line == NORTH || line == SOUTH || 
+			line == EAST || line == WEST || 
+			line == ' ' || line == '\t' );
+}
+
+int is_valid_map_char(char *line)
+{
+	// Allowed: 0 1 N S E W (and spaces)
 	int i;
-	int len;
+
+	if (!line)
+		return (0);
+	i = 0;
+	while (line[i] && line[i] != '\n')
+	{
+		if (ft_strchr(line, valid_input(line[i])))
+			return (0);
+		i++;
+	}
+	return (1);			
+}
+
+int	is_valid_row(char *line)
+{
+	int	i;
+	int	len;
 
 	if (!line || line[0] == '\0')
 		return (0);
@@ -31,12 +56,12 @@ int is_valid_row(char *line)
 	return (1);
 }
 
-int is_all_ones(char *last_map_line)
+int	is_all_ones(char *last_map_line)
 {
-	int i;
+	int	i;
 
 	i = 0;
-	while(last_map_line[i])
+	while (last_map_line[i])
 	{
 		if (last_map_line[i] != WALL && !ft_isspace(last_map_line[i]))
 			return (0);
@@ -45,108 +70,117 @@ int is_all_ones(char *last_map_line)
 	return (1);
 }
 
-int open_file(void)
+void	initialize_line(t_line *line)
 {
-	int			fd;
-	char    	*next_line;
-	char		*first_map_line;
-	char		*last_map_line;
-	int			is_first_line;
-	int			error;
-	char		*tmp;
+	line->first_map_line = NULL;
+	line->last_map_line = NULL;
+	line->is_first_line = 1;
+	line->error = 0;
+}
+////////////////
+	// so, literally, what i do is that i created these 2 variables first and last row,
+	// to keep track in case these rows are other than 1s. They should always be 1 nontheless
+	// so what i do, i check for each char, and if the first_map_line is empty,
+	// then add only the first line
+	// in case we have:
+	// 		00000000
+	// 		00000000
+	// 		11111111
+	// here our first_map_line will be: 00000000
+	// where as the last_map_line will just be overwritten for each iteration 
+	// until it reaches the end
+	// and as a result our last_map_line will be: 11111111
+////////////////
+void	process_map_line(char *next_line, t_line *line)
+{
+	int	i;
+
+	i = 0;
+	while (ft_isspace(next_line[i]))
+		i++;
+	if (next_line[i] == '\0')
+		return ;
+	if (line->is_first_line)
+	{
+		line->first_map_line = ft_strdup(&next_line[i]);
+		line->is_first_line = 0;
+	}
+	free(line->last_map_line);
+	line->last_map_line = ft_strdup(&next_line[i]);
+	if (!is_valid_row(&next_line[i]))
+		line->error = 1;
+}
+////////////////
+	// here i validate the first and last rows to check if it contains 1 or also spaces,
+	// if it contains smth else than it frees and displays error,
+	//	that the map is not valid
+////////////////	
+int validate_map_borders(t_line *line)
+{
+	if (!line->error)
+	{
+		if (line->first_map_line && !is_all_ones(line->first_map_line))
+			line->error = 1;
+		if (line->last_map_line && !is_all_ones(line->last_map_line))
+			line->error = 1;
+	}
+	if (line->error)
+	{
+		print_error("ERROR: Invalid map\n");
+		return (EXIT_FAILURE);
+	}
+	return (EXIT_SUCCESS);
+}
+
+int	open_file(t_line *line)
+{
+	int		fd;
+	char	*next_line;
 
 	fd = open("map.cub", O_RDONLY);
 	if (fd == -1)
 		return (print_error("Error: opening the file\n"), ERROR_FD);
-	
-	printf("opened the file\n");
-	
-	first_map_line = NULL;
-	last_map_line = NULL;
-	is_first_line = 1;
-	error = 0;
-	
-	while ((next_line = get_next_line(fd)) != NULL)
+	printf("opened the file\n");  			// DEBUG
+	initialize_line(line);
+	while ((next_line = get_next_line(fd)))
 	{
-		int i = 0;
-		while(ft_isspace(next_line[i]))
-			i++;
-		////////////////
-		// so, literally, what i do is that i created these 2 variables first and last row,
-		// to keep track in case these rows are other than 1s. They should always be 1 nontheless
-		// so what i do, i check for each char, and if the first_map_line is empty, 
-		// then add only the first line
-		// in case we have:
-		// 		00000000
-		// 		00000000
-		// 		11111111
-		// here our first_map_line will be: 00000000
-		// where as the last_map_line will just be overwritten for each iteration until it reaches the end
-		// and as a result our last_map_line will be: 11111111
-		////////////////
-		if (next_line[i] != '\0')
-		{
-			if (is_first_line)
-			{
-				first_map_line = ft_strdup(&next_line[i]);
-				is_first_line = 0;
-			}
-			free(last_map_line);
-			last_map_line = ft_strdup(&next_line[i]);
-			if (!is_valid_row(&next_line[i]))
-			{
-				error = 1;
-				free(next_line);
-				break ;
-			}
-		}
 		printf("%s\n", next_line);
+		if (!is_valid_map_char(next_line))
+		{
+			line->error = 1;
+			free(next_line);
+			break ;
+		}
+		process_map_line(next_line, line);
 		free(next_line);
+		if (line->error)
+			break ;
 	}
-	close (fd);
-	// need to clean the static var from gnl so i leave it to clean it
-	if (!error)
-	{
-		if (first_map_line && !is_all_ones(first_map_line))
-			error = 1;
-		if (last_map_line && !is_all_ones(last_map_line))
-			error = 1;
-	}
-	////////////////
-	// here i validate the first and last rows to check if it contains 1 or also spaces,
-	// if it contains smth else than it frees and displays error, that the map is not valid
-	////////////////
-	if (error)
-	{
-		while ((tmp = get_next_line(fd)) != NULL)
-			free(tmp);
-		print_error("ERROR: Invalid map\n");
-		free(first_map_line);
-		free(last_map_line);
-		return (EXIT_FAILURE);
-	}
-	free(first_map_line);
-	free(last_map_line);
-	printf("Map validation passed\n");
+	// this bcs inside gnl i use a static var
+	// and it causes leaks when i pass invalid map
+	get_next_line(-1);
+	close(fd);
+	if (validate_map_borders(line) != EXIT_SUCCESS)
+		return (free(line->first_map_line), 
+			free(line->last_map_line), EXIT_FAILURE);
+	printf("Map validation passed\n");  	// DEBUG
+	free(line->first_map_line);
+	free(line->last_map_line);
 	return (EXIT_SUCCESS);
 }
 
-int main()
-{	
-	t_data		data;
+int	main(void)
+{
+	t_data data;
+	t_line line;
 
-	printf("entering\n");
-	
-	if (open_file() != EXIT_SUCCESS)
-		return (print_error("ERROR: opening the file\n"), ERROR_OPENING_FILE);
-	
-	printf("file reading finished\n");
-	printf("about to init the window\n");
-	
+	printf("entering\n");				  // DEBUG
+	if (open_file(&line) != EXIT_SUCCESS)
+		return (ERROR_OPENING_FILE);
+	printf("file reading finished\n"); 	  // DEBUG	
+	printf("about to init the window\n"); // DEBUG
 	init_window_and_display(&data);
-
-	printf("init the window\n");
-	
+	printf("init the window\n"); 		  // DEBUG
 	mlx_loop_helper(&data);
 	return (EXIT_SUCCESS);
 }
