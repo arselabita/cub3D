@@ -1,0 +1,4 @@
+./cub
+*.o
+map.cub
+map_task.txt
