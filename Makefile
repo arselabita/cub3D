@@ -6,7 +6,7 @@
 #    By: abita <abita@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/02/11 14:58:16 by abita             #+#    #+#              #
-#    Updated: 2026/02/16 14:15:01 by abita            ###   ########.fr        #
+#    Updated: 2026/02/16 19:46:54 by abita            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,6 +32,7 @@ SRCS = \
 	  map.c \
 	  mlx/keys.c \
 	  mlx/window.c \
+	  utils/init.c \
 	  utils/error_return.c \
 	  utils/map_helpers.c \
 

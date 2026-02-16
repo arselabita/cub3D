@@ -6,7 +6,7 @@
 /*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 16:15:08 by abita             #+#    #+#             */
-/*   Updated: 2026/02/16 19:03:24 by abita            ###   ########.fr       */
+/*   Updated: 2026/02/16 19:58:28 by abita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ typedef struct s_data
 }			t_data;
 
 /* ************************************************************************** */
-/*                                   FD				                           */
+/*                                   FD						                     */
 /* ************************************************************************** */
 typedef struct s_line
 {
@@ -88,6 +88,7 @@ typedef struct s_line
 	int		is_first_line;
 	int		error;
 	char	*tmp;
+	int		player_count;
 }			t_line;
 
 /* ************************************************************************** */
@@ -109,15 +110,16 @@ void		print_error(const char *msg);
 void		initialize_line(t_line *line);
 int			is_all_ones(char *last_map_line);
 int			is_valid_row(char *line);
-int			is_valid_map_char(char *line);
-int			valid_input(char line);
+int			is_valid_map_char(char *line, t_line *map);
+int			is_player(char line);
+int			is_valid_input(char line);
 
 /* ************************************************************************** */
 /*                                  MAP                                     */
 /* ************************************************************************** */
 
 int			open_file(char *path, t_line *line);
-int			validate_map_borders(t_line *line);
+int			validate_map(t_line *line);
 void		process_map_line(char *next_line, t_line *line);
 
 #endif
