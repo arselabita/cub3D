@@ -6,7 +6,7 @@
 /*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 15:28:55 by abita             #+#    #+#             */
-/*   Updated: 2026/02/12 15:22:01 by abita            ###   ########.fr       */
+/*   Updated: 2026/02/16 14:29:16 by abita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,17 @@
 
 int	ft_exit_error(t_data *data)
 {
-	mlx_destroy_image(data->mlx, data->img.img);
-	mlx_destroy_window(data->mlx, data->win);
-	mlx_destroy_display(data->mlx);
-	free(data->mlx);
+	if (!data)
+		exit(EXIT_FAILURE);
+	if (data->mlx)
+	{
+		if (data->img.img)
+			mlx_destroy_image(data->mlx, data->img.img);
+		if (data->win)
+			mlx_destroy_window(data->mlx, data->win);
+		mlx_destroy_display(data->mlx);
+		free(data->mlx);
+	}
 	exit(EXIT_FAILURE);
 }
 
@@ -49,6 +56,10 @@ void	mlx_loop_helper(t_data *data)
 
 void	init_window_and_display(t_data *data)
 {
+	data->mlx = NULL;
+	data->win = NULL;
+	data->img.img = NULL;
+
 	data->mlx = mlx_init();
 	if (!data->mlx)
 		exit (EXIT_FAILURE);

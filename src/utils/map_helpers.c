@@ -1,30 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map_utils.c                                        :+:      :+:    :+:   */
+/*   map_helpers.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/16 13:56:33 by abita             #+#    #+#             */
-/*   Updated: 2026/02/16 13:56:58 by abita            ###   ########.fr       */
+/*   Updated: 2026/02/16 14:14:34 by abita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub.h"
 
-int valid_input(char line)
+int	valid_input(char line)
 {
-	return (line == SPACE || line == WALL || 
-			line == NORTH || line == SOUTH || 
-			line == EAST || line == WEST || 
-			line == ' ' || line == '\t' );
+	return (line == SPACE || line == WALL || line == NORTH || line == SOUTH
+		|| line == EAST || line == WEST || line == ' ' || line == '\t');
 }
 
-int is_valid_map_char(char *line)
+int	is_valid_map_char(char *line)
 {
-	// Allowed: 0 1 N S E W (and spaces)
-	int i;
+	int	i;
 
+	// Allowed: 0 1 N S E W (and spaces)
 	if (!line)
 		return (0);
 	i = 0;
@@ -34,7 +32,7 @@ int is_valid_map_char(char *line)
 			return (0);
 		i++;
 	}
-	return (1);			
+	return (1);
 }
 
 int	is_valid_row(char *line)
