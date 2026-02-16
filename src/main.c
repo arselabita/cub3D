@@ -6,7 +6,7 @@
 /*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 15:54:05 by abita             #+#    #+#             */
-/*   Updated: 2026/02/16 19:03:22 by abita            ###   ########.fr       */
+/*   Updated: 2026/02/16 19:19:05 by abita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 
 int	input_validity(t_line	*line, t_data *data, int argc, char **argv)
 {
+	char *path;
+	char *dot;
+
 	if (argc < 2)
 	{
 		write (2, "WARNING: [pass a map file: '.cub'].\n", 37);
@@ -24,23 +27,19 @@ int	input_validity(t_line	*line, t_data *data, int argc, char **argv)
 		write(2, "WARNING: [too many arguments].\n", 32);
 		ft_exit_error(data);
 	}
-	char *path;
-	char *dot_found;
-	// int compare;
-
 	path = argv[1];
-	printf("path: %s\n", path);
-	dot_found = ft_strrchr(path, '.');
-	if (!dot_found)
+	printf("path: %s\n", path);  	// DEBUG
+
+	dot = ft_strrchr(path, '.'); 	
+	printf("dot: %s\n", dot);		// DEBUG
+
+	if (!dot || ft_strcmp(dot, ".cub") != 0)
+	{
+		print_error("ERROR: map must have '.cub' ext\n");
 		return (EXIT_FAILURE);
-	printf("dot_found: %s\n", dot_found);
-	// printf("compare: %i\n", compare);
-	// compare = ft_strcmp(dot_found, ".cub");
-	if (ft_strcmp(dot_found, ".cub") == 0)
-	{ 
-		if (open_file(path, line) != EXIT_SUCCESS)
-			return (ERROR_OPENING_FILE);
-	}		
+	}
+	if (open_file(path, line) != EXIT_SUCCESS)
+		return (ERROR_OPENING_FILE);	
 	return (0);
 }
 
@@ -53,7 +52,8 @@ int	main(int argc, char **argv)
 	ft_bzero(&line, sizeof(t_line));
 
 	printf("entering\n"); // DEBUG
-	input_validity(&line, &data, argc, argv);
+	if (input_validity(&line, &data, argc, argv) != EXIT_SUCCESS)
+		return (EXIT_FAILURE);
 	printf("file reading finished\n");    // DEBUG
 	printf("about to init the window\n"); // DEBUG
 	init_window_and_display(&data);
