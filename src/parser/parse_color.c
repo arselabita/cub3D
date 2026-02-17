@@ -1,20 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error_return.c                                     :+:      :+:    :+:   */
+/*   parse_color.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/02/11 17:29:49 by abita             #+#    #+#             */
-/*   Updated: 2026/02/11 17:30:02 by abita            ###   ########.fr       */
+/*   Created: 2026/02/17 14:00:00 by abita             #+#    #+#             */
+/*   Updated: 2026/02/17 15:23:16 by abita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub.h"
+// #include "cub.h"
 
-void	print_error(const char *msg)
-{
-	write(STDERR_FILENO, RED, 5);
-	write(STDERR_FILENO, msg, ft_strlen(msg));
-	write(STDERR_FILENO, RED, 5);
-}
+// int parse_color(char *line, t_line *map)
+// {
+	
+// }

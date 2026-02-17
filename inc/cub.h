@@ -6,7 +6,7 @@
 /*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 16:15:08 by abita             #+#    #+#             */
-/*   Updated: 2026/02/16 19:58:28 by abita            ###   ########.fr       */
+/*   Updated: 2026/02/17 15:31:08 by abita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,8 @@
 typedef enum e_return_values
 {
 	ERROR_FD = -1,
-	ERROR_OPENING_FILE = -2
+	ERROR_OPENING_FILE = -2,
+	ERROR_INVALID_MAP = -3
 }			e_return_values;
 
 /* ************************************************************************** */
@@ -79,7 +80,7 @@ typedef struct s_data
 }			t_data;
 
 /* ************************************************************************** */
-/*                                   FD						                     */
+/*                                   FD_line Struct								   */
 /* ************************************************************************** */
 typedef struct s_line
 {
@@ -89,6 +90,7 @@ typedef struct s_line
 	int		error;
 	char	*tmp;
 	int		player_count;
+	int		map_started;
 }			t_line;
 
 /* ************************************************************************** */
@@ -107,19 +109,32 @@ int			ft_exit_error(t_data *data);
 /* ************************************************************************** */
 
 void		print_error(const char *msg);
-void		initialize_line(t_line *line);
 int			is_all_ones(char *last_map_line);
-int			is_valid_row(char *line);
-int			is_valid_map_char(char *line, t_line *map);
 int			is_player(char line);
 int			is_valid_input(char line);
 
 /* ************************************************************************** */
-/*                                  MAP                                     */
+/*                                  Parser                                    */
 /* ************************************************************************** */
 
-int			open_file(char *path, t_line *line);
-int			validate_map(t_line *line);
-void		process_map_line(char *next_line, t_line *line);
+int			parser(char *path, t_line *map);
+
+// map //
+int			parse_map_line(char *line, t_line *map);
+int			is_valid_row(char *line);
+int			is_valid_map(char *line, t_line *map);
+
+// textures //
+int			parse_texture(char *line, t_line *map);
+
+// color //
+int			parse_color(char *line, t_line *map);
+
+// utils //
+void		init_line(t_line *line);
+int			skip_whitespace(char *line);
+int			is_texture_line(char *line);
+int			is_color_line(char *line);
+int			validate_map(t_line *map);
 
 #endif
