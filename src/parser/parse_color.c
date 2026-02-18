@@ -6,7 +6,7 @@
 /*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 14:00:00 by abita             #+#    #+#             */
-/*   Updated: 2026/02/18 13:45:43 by abita            ###   ########.fr       */
+/*   Updated: 2026/02/18 16:21:10 by abita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int parse_color(char *line, t_line *map)
 		return (0);
 	id = get_id_type(line);
 	printf("the color type: %i\n", id);
-	color_range = get_color_range(line);
+	// color_range = get_color_range(line);
 	printf("color range: \n", color_range);
 	return (EXIT_SUCCESS);
 }

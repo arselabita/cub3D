@@ -6,7 +6,7 @@
 /*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 14:02:56 by abita             #+#    #+#             */
-/*   Updated: 2026/02/18 12:40:05 by abita            ###   ########.fr       */
+/*   Updated: 2026/02/18 13:50:13 by abita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static int	parse_line(char *line, t_line *map)
 	if (!map->map_started)
 	{
 		if (is_texture_line(p))
-			return (parse_textures(&line[i], map));
+			return (parse_texture(&line[i], map));
 		if (is_color_line(p))
 			return (parse_color(&line[i], map));
 		map->map_started = 1;
