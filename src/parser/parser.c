@@ -6,12 +6,42 @@
 /*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 14:02:56 by abita             #+#    #+#             */
-/*   Updated: 2026/02/17 15:37:44 by abita            ###   ########.fr       */
+/*   Updated: 2026/02/18 12:40:05 by abita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub.h"
 
+////////////////
+// here i validate the first and last rows to check if it
+// contains 1 or also spaces,
+// if it contains smth else than it frees and displays error,
+//	that the map is not valid
+////////////////
+static int	validate_map(t_line *map)
+{
+	if (map->error)
+	{
+		print_error("ERROR: Invalid map\n");
+		return (EXIT_FAILURE);
+	}
+	if (!map->first_map_line || !map->last_map_line)
+	{
+		print_error("ERROR: Empty map.\n");
+		return (EXIT_FAILURE);
+	}
+	if (!is_all_ones(map->first_map_line) || !is_all_ones(map->last_map_line))
+	{
+		print_error("ERROR: Map not closed.\n");
+		return (EXIT_FAILURE);
+	}
+	if (map->player_count != 1)
+	{
+		print_error("ERROR: Map should contain only one player.\n");
+		return (EXIT_FAILURE);
+	}
+	return (EXIT_SUCCESS);
+}
 static int	parse_line(char *line, t_line *map)
 {
 	char	*p;
