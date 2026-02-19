@@ -6,7 +6,7 @@
 #    By: abita <abita@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/02/11 14:58:16 by abita             #+#    #+#              #
-#    Updated: 2026/02/17 15:29:02 by abita            ###   ########.fr        #
+#    Updated: 2026/02/19 15:24:22 by abita            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,12 +31,13 @@ SRCS = \
 	  main.c \
 	  mlx/keys.c \
 	  mlx/window.c \
-	  parser/parser.c \
-	  parser/parse_map.c \
-	  parser/parse_utils.c \
 	  utils/map_utils.c \
 	  utils/return_utils.c \
-# 	  parser/parse_texture.c\
+	  parser/parser.c \
+	  parser/parse_map.c \
+	  parser/parse_color.c \
+	  parser/parse_utils.c \
+	  parser/parse_texture.c \
 
 OBJS = $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
 

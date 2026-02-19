@@ -6,7 +6,7 @@
 /*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/16 13:55:41 by abita             #+#    #+#             */
-/*   Updated: 2026/02/18 12:53:35 by abita            ###   ########.fr       */
+/*   Updated: 2026/02/19 15:49:48 by abita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ int	parse_map_line(char *line, t_line *map)
 	int	i;
 
 	i = 0;
+	// map->map_started = 0;
 	while (ft_isspace(line[i]))
 		i++;
 	if (line[i] == '\0')

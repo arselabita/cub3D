@@ -6,7 +6,7 @@
 /*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 14:06:52 by abita             #+#    #+#             */
-/*   Updated: 2026/02/18 12:46:41 by abita            ###   ########.fr       */
+/*   Updated: 2026/02/19 15:36:02 by abita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	skip_whitespace(char *line)
 	int i;
 
 	i = 0;
-	while ((line[i] && line[i] == ' ') || (line[i] >= 9 && line[i] <= 13))
+	while ((line[i] && line[i] == ' '))
 		i++;
 	return (i);
 }
@@ -62,4 +62,20 @@ int is_color_line(char *line)
 			return (1);
 	}
 	return (0);
+}
+
+void	free_split(char **split)
+{
+	size_t	i;
+
+	i = 0;
+	if (!split)
+		return ;
+	while (split[i])
+	{
+		free(split[i]);
+		split[i] = NULL;
+		i++;
+	}
+	free(split);
 }

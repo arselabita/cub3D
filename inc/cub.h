@@ -6,7 +6,7 @@
 /*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 16:15:08 by abita             #+#    #+#             */
-/*   Updated: 2026/02/19 13:52:15 by abita            ###   ########.fr       */
+/*   Updated: 2026/02/19 15:29:17 by abita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@
 # define WEST 'W'
 
 // rgb
-#define RGB (rgb[0] << 16) | (rgb[1] << 8) | (rgb[2])
+# define RGB (rgb[0] << 16) | (rgb[1] << 8) | (rgb[2])
 
 ////////////////////////////////////////////////////////////////////////////////
 /* ************************************************************************** */
@@ -119,11 +119,30 @@ typedef struct s_line
 	int		map_started;
 }			t_line;
 
+
+/* ************************************************************************** */
+/*                                   Color Struct                             */
+/* ************************************************************************** */
+
 typedef struct s_color_data
 {
 	int		floor_color;
 	int		ceiling_color;
 }			t_color_data;
+
+
+/* ************************************************************************** */
+/*                                   Texture Struct	                          */
+/* ************************************************************************** */
+
+typedef struct s_texture_data
+{
+	int no;
+	int so;
+	int we;
+	int ea;
+} t_texture_data;
+
 
 ////////////////////////////////////////////////////////////////////////////////
 /* ************************************************************************** */
@@ -150,7 +169,7 @@ int			is_valid_input(char line);
 /*                                  Parser                                    */
 /* ************************************************************************** */
 
-int			parser(char *path, t_line *map, t_color_data *c_data);
+int	parser(char *path, t_line *map, t_color_data *c_data, t_texture_data *t_data);
 
 // map //
 int			parse_map_line(char *line, t_line *map);
@@ -158,7 +177,7 @@ int			is_valid_row(char *line);
 int			is_valid_map(char *line, t_line *map);
 
 // textures //
-int			parse_texture(char *line, t_line *map);
+int	parse_texture(char *line, t_texture_data *t_data);
 
 // color //
 int			parse_color(char *line, t_color_data *c_data);
@@ -168,6 +187,6 @@ void		init_line(t_line *line);
 int			skip_whitespace(char *line);
 int			is_texture_line(char *line);
 int			is_color_line(char *line);
-int			validate_map(t_line *map);
+void		free_split(char **split);
 
 #endif

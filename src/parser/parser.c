@@ -6,7 +6,7 @@
 /*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 14:02:56 by abita             #+#    #+#             */
-/*   Updated: 2026/02/19 13:34:56 by abita            ###   ########.fr       */
+/*   Updated: 2026/02/19 15:39:05 by abita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,20 +42,21 @@ static int	validate_map(t_line *map)
 	}
 	return (EXIT_SUCCESS);
 }
-static int	parse_line(char *line, t_line *map, t_color_data *c_data)
+static int	parse_line(char *line, t_line *map, t_color_data *c_data, t_texture_data *t_data)
 {
-	char	*p;
 	int		i;
 
-	p = skip_whitespace(line);
+	printf("line is: %s\n", line);
 	i = 0;
-	if (p[i] == '\0' || p[i] == '\n')
+	while (line[i] == ' ' || line[i] == '\t')
+		i++;
+	if (line[i] == '\0' || line[i] == '\n')
 		return (EXIT_SUCCESS);
 	if (!map->map_started)
 	{
-		if (is_texture_line(p))
-			return (parse_texture(&line[i], map));
-		if (is_color_line(p))
+		if (is_texture_line(line))
+			return (parse_texture(&line[i], t_data));
+		if (is_color_line(line))
 			return (parse_color(&line[i], c_data));
 		map->map_started = 1;
 	}
@@ -63,7 +64,7 @@ static int	parse_line(char *line, t_line *map, t_color_data *c_data)
 	return (EXIT_SUCCESS);
 }
 
-int	parser(char *path, t_line *map, t_color_data *c_data)
+int	parser(char *path, t_line *map, t_color_data *c_data, t_texture_data *t_data)
 {
 	int		fd;
 	char	*line;
@@ -74,7 +75,7 @@ int	parser(char *path, t_line *map, t_color_data *c_data)
 	init_line(map);
 	while ((line = get_next_line(fd)))
 	{
-		if (parse_line(line, map, c_data) != EXIT_SUCCESS)
+		if (parse_line(line, map, c_data, t_data) != EXIT_SUCCESS)
 		{
 			free(line);
 			break ;

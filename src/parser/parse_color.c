@@ -6,30 +6,13 @@
 /*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 14:00:00 by abita             #+#    #+#             */
-/*   Updated: 2026/02/19 14:11:31 by abita            ###   ########.fr       */
+/*   Updated: 2026/02/19 15:53:07 by abita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub.h"
 
-void	free_split(char **split)
-{
-	size_t	i;
-
-	i = 0;
-	if (!split)
-		return ;
-	while (split[i])
-	{
-		free(split[i]);
-		split[i] = NULL;
-		i++;
-	}
-	free(split);
-}
-
-
-int get_id_type(char *line)
+static int get_id_type(char *line)
 {
 	int i;
 
@@ -43,7 +26,7 @@ int get_id_type(char *line)
 	return (ERROR);
 }
 
-int get_color_range(char *line)
+static int get_color_range(char *line)
 {
 	int i;
 	int j;
@@ -64,21 +47,20 @@ int get_color_range(char *line)
 	{
 		if (!split[j])
 			return (-1);
-		rgb[j] = atoi(split[j]);
+		rgb[j] = ft_atoi(split[j]);
 		if (rgb[j] < 0 || rgb[j] > 255)
 			return (free_split(split), -1);
 		j++;
 	}
 	if (split[3])
 		return(free_split(split), -1);
-	return (free_split(split), RGB); // pass the rgb bit shifting
+	return (free_split(split), RGB); // passing the rgb bit shifting
 }
 
 int parse_color(char *line, t_color_data *c_data)
 {
 	int id;
 	int color;
-	t_color_data c_data;
 
 	id = get_id_type("F 220,100, 0");
 	if (id == -1)
