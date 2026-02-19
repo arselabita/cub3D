@@ -6,7 +6,7 @@
 /*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 11:56:47 by abita             #+#    #+#             */
-/*   Updated: 2026/02/18 13:54:50 by abita            ###   ########.fr       */
+/*   Updated: 2026/02/18 22:35:29 by abita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,5 @@ int	parse_texture(char *line, t_line *map)
 	// check if it is a path
 	path = get_path(line);
 	printf("the path is: %s\n", path);
-	if (id == NO && open(path))
 	return (EXIT_SUCCESS);
 }

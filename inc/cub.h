@@ -6,7 +6,7 @@
 /*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 16:15:08 by abita             #+#    #+#             */
-/*   Updated: 2026/02/18 22:19:00 by abita            ###   ########.fr       */
+/*   Updated: 2026/02/19 13:52:15 by abita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,9 @@
 # define EAST 'E'
 # define WEST 'W'
 
+// rgb
+#define RGB (rgb[0] << 16) | (rgb[1] << 8) | (rgb[2])
+
 ////////////////////////////////////////////////////////////////////////////////
 /* ************************************************************************** */
 /*                                   ENUM Error FD                            */
@@ -69,7 +72,7 @@ typedef enum e_txt_type
 	SO,
 	WE,
 	EA
-} t_txt_type;
+}			t_txt_type;
 
 /* ************************************************************************** */
 /*                             ENUM Color   Types                             */
@@ -78,7 +81,7 @@ typedef enum e_color_type
 {
 	F = 11,
 	C = 12
-} t_color_type;
+}			t_color_type;
 
 ////////////////////////////////////////////////////////////////////////////////
 /* ************************************************************************** */
@@ -103,7 +106,7 @@ typedef struct s_data
 }			t_data;
 
 /* ************************************************************************** */
-/*                                   FD_line Struct								   */
+/*                                   FD_line Struct									*/
 /* ************************************************************************** */
 typedef struct s_line
 {
@@ -116,12 +119,11 @@ typedef struct s_line
 	int		map_started;
 }			t_line;
 
-typedef struct s_color
+typedef struct s_color_data
 {
-	int floor_color;
-	int ceiling_color;
-} t_color;
-
+	int		floor_color;
+	int		ceiling_color;
+}			t_color_data;
 
 ////////////////////////////////////////////////////////////////////////////////
 /* ************************************************************************** */
@@ -148,7 +150,7 @@ int			is_valid_input(char line);
 /*                                  Parser                                    */
 /* ************************************************************************** */
 
-int			parser(char *path, t_line *map);
+int			parser(char *path, t_line *map, t_color_data *c_data);
 
 // map //
 int			parse_map_line(char *line, t_line *map);
@@ -159,7 +161,7 @@ int			is_valid_map(char *line, t_line *map);
 int			parse_texture(char *line, t_line *map);
 
 // color //
-int			parse_color(char *line, t_line *map);
+int			parse_color(char *line, t_color_data *c_data);
 
 // utils //
 void		init_line(t_line *line);

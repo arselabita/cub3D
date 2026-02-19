@@ -6,7 +6,7 @@
 /*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 15:54:05 by abita             #+#    #+#             */
-/*   Updated: 2026/02/17 15:23:59 by abita            ###   ########.fr       */
+/*   Updated: 2026/02/19 13:35:31 by abita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int	input_validity(t_line *line, t_data *data, int argc, char **argv)
 {
 	char	*path;
 	char	*dot;
+	t_color_data c_data;
 
 	if (argc < 2)
 	{
@@ -34,7 +35,7 @@ int	input_validity(t_line *line, t_data *data, int argc, char **argv)
 		print_error("ERROR: map must have '.cub' extention.\n");
 		return (EXIT_FAILURE);
 	}
-	if (parser(path, line) != EXIT_SUCCESS)
+	if (parser(path, line, &c_data) != EXIT_SUCCESS)
 		return (ERROR_OPENING_FILE);
 	return (0);
 }
