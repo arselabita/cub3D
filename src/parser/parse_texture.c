@@ -6,7 +6,7 @@
 /*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 11:56:47 by abita             #+#    #+#             */
-/*   Updated: 2026/02/19 15:39:30 by abita            ###   ########.fr       */
+/*   Updated: 2026/02/19 16:30:46 by abita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,5 +71,6 @@ int	parse_texture(char *line, t_texture_data *t_data)
 		t_data->we = fd;
 	if (id == EA)
 		t_data->ea = fd;
+	free(path);
 	return (EXIT_SUCCESS);
 }

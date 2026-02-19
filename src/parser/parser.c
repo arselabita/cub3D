@@ -6,7 +6,7 @@
 /*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 14:02:56 by abita             #+#    #+#             */
-/*   Updated: 2026/02/19 15:39:05 by abita            ###   ########.fr       */
+/*   Updated: 2026/02/19 16:31:21 by abita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,26 +42,51 @@ static int	validate_map(t_line *map)
 	}
 	return (EXIT_SUCCESS);
 }
-static int	parse_line(char *line, t_line *map, t_color_data *c_data, t_texture_data *t_data)
-{
-	int		i;
 
-	printf("line is: %s\n", line);
+static int	is_map_line(char *line)
+{
+	int	i;
+
+	if (!line)
+		return (0);
 	i = 0;
 	while (line[i] == ' ' || line[i] == '\t')
 		i++;
 	if (line[i] == '\0' || line[i] == '\n')
-		return (EXIT_SUCCESS);
+		return (0);
+	while (line[i] && line[i] != '\n')
+	{
+		if (!is_valid_input(line[i]))
+			return (0);
+		i++;
+	}
+	return (1);
+}
+static int	parse_line(char *line, t_line *map, t_color_data *c_data, t_texture_data *t_data)
+{
+	int		i;
+
+	i = 0;
+	while (line[i] == ' ' || line[i] == '\t')
+		i++;
+	if (line[i] == '\0' || line[i] == '\n')
+		return (0);
 	if (!map->map_started)
 	{
 		if (is_texture_line(line))
 			return (parse_texture(&line[i], t_data));
 		if (is_color_line(line))
 			return (parse_color(&line[i], c_data));
-		map->map_started = 1;
+		if (is_map_line(line))
+		{
+			map->map_started = 1;
+			return(parse_map_line(&line[i], map));
+		}
+		return (print_error("Error: invalid line before map.\n"), EXIT_FAILURE);
 	}
-	parse_map_line(&line[i], map);
-	return (EXIT_SUCCESS);
+	if (!is_map_line(line))
+		return (print_error("Error: invalid content after map.\n"), EXIT_FAILURE);
+	return (parse_map_line(&line[i], map));
 }
 
 int	parser(char *path, t_line *map, t_color_data *c_data, t_texture_data *t_data)
