@@ -6,7 +6,7 @@
 /*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 14:02:56 by abita             #+#    #+#             */
-/*   Updated: 2026/02/19 16:31:21 by abita            ###   ########.fr       */
+/*   Updated: 2026/02/19 20:12:56 by abita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 // if it contains smth else than it frees and displays error,
 //	that the map is not valid
 ////////////////
+
 static int	validate_map(t_line *map)
 {
 	if (map->error)
@@ -105,6 +106,7 @@ int	parser(char *path, t_line *map, t_color_data *c_data, t_texture_data *t_data
 			free(line);
 			break ;
 		}
+		free(line);
 	}
 	get_next_line(-1);
 	close(fd);

@@ -6,7 +6,7 @@
 /*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 15:54:05 by abita             #+#    #+#             */
-/*   Updated: 2026/02/19 15:41:15 by abita            ###   ########.fr       */
+/*   Updated: 2026/02/19 22:31:34 by abita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,11 @@
 
 int	input_validity(t_line *line, t_data *data, int argc, char **argv)
 {
-	char	*path;
-	char	*dot;
-	t_color_data c_data;
-	t_texture_data t_data;
+	char			*path;
+	char			*dot;
+	char			*slash;
+	t_color_data	c_data;
+	t_texture_data	t_data;
 
 	if (argc < 2)
 	{
@@ -30,6 +31,13 @@ int	input_validity(t_line *line, t_data *data, int argc, char **argv)
 		ft_exit_error(data);
 	}
 	path = argv[1];
+	slash = ft_strrchr(path, '/');
+	// printf("backslash: %s\n", slash);
+	if (slash && slash[1] == '.')
+	{
+		printf("error: this is a hidden path\n");
+		return (EXIT_FAILURE);
+	}
 	dot = ft_strrchr(path, '.');
 	if (!dot || ft_strcmp(dot, ".cub") != 0)
 	{
