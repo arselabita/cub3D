@@ -6,7 +6,7 @@
 /*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 14:02:56 by abita             #+#    #+#             */
-/*   Updated: 2026/02/20 20:11:38 by abita            ###   ########.fr       */
+/*   Updated: 2026/02/20 20:54:08 by abita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ static int	parse_line(char *line, t_line *map, t_color_data *c_data, t_texture_d
 		}
 		return (print_error("Error: invalid line before map.\n"), EXIT_FAILURE);
 	}
+	close(t_data->fd);
 	if (!is_map_line(line))
 		return (print_error("Error: invalid content after map.\n"), EXIT_FAILURE);
 	return (parse_map_line(&line[i], map));

@@ -6,7 +6,7 @@
 /*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 16:15:08 by abita             #+#    #+#             */
-/*   Updated: 2026/02/20 15:03:59 by abita            ###   ########.fr       */
+/*   Updated: 2026/02/20 20:48:43 by abita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,6 +137,7 @@ typedef struct s_texture_data
 	int so;
 	int we;
 	int ea;
+	int fd;
 } t_texture_data;
 
 
