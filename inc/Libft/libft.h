@@ -6,7 +6,7 @@
 /*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 15:17:50 by abita             #+#    #+#             */
-/*   Updated: 2026/02/11 15:31:49 by abita            ###   ########.fr       */
+/*   Updated: 2026/02/11 20:01:20 by abita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,9 @@
 # include <stdlib.h>
 # include <stdint.h>
 # include <fcntl.h>
-# include "get_next_line/get_next_line.h"
+
+# define BUFFER_SIZE 40962
+
 
 typedef struct s_atof
 {
@@ -34,12 +36,14 @@ int		ft_isascii(int c);
 int		ft_isprint(int c);
 int		ft_toupper(int c);
 int		ft_tolower(int c);
+int		ft_isspace(char c);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 int		ft_memcmp(const void *s1, const void *s2, size_t n);
 int		ft_atoi(const char *nptr);
 double	ft_atof(const char *nptr);
 
 
+char	*get_next_line(int fd);
 char	*ft_strchr(const char *s, int c);
 char	*ft_strrchr(const char *s, int c);
 char	*ft_strnstr(const char *big, const char *little, size_t len);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abita <abita@student.42vienna.com>         +#+  +:+       +#+        */
+/*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 15:48:25 by abita             #+#    #+#             */
-/*   Updated: 2025/05/05 19:31:44 by abita            ###   ########.fr       */
+/*   Updated: 2026/02/18 16:01:07 by abita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,31 +110,31 @@ char	**ft_split(char const *s, char c)
 	return (split);
 }
 
-int main()
-{
-	char str[] = "Returns NULL if the allocation fails.";
-	char ch = '\0';
-	char **split;
-	int i;
+// int main()
+// {
+// 	char str[] = "Returns NULL if the allocation fails.";
+// 	char ch = '\0';
+// 	char **split;
+// 	int i;
 
-	split = ft_split(str, ch);
-	if (split)
-	{
-		printf("the string: %s\n", str);
-		printf("the delimiter: %c\n", ch);
-		i = 0;
-		while (split[i])
-		{
-			printf("split[%d] = %s\n", i, split[i]);
-			free(split[i]);
-			i++;
-		}
-		free(split);
-	}
-	else
-	{
-		printf("Memory allocation failed!\n");
-		free(split);
-	}
-	return (0);
-}
+// 	split = ft_split(str, ch);
+// 	if (split)
+// 	{
+// 		printf("the string: %s\n", str);
+// 		printf("the delimiter: %c\n", ch);
+// 		i = 0;
+// 		while (split[i])
+// 		{
+// 			printf("split[%d] = %s\n", i, split[i]);
+// 			free(split[i]);
+// 			i++;
+// 		}
+// 		free(split);
+// 	}
+// 	else
+// 	{
+// 		printf("Memory allocation failed!\n");
+// 		free(split);
+// 	}
+// 	return (0);
+// }

@@ -1,25 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   return_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/17 14:35:54 by abita             #+#    #+#             */
-/*   Updated: 2026/02/11 15:56:17 by abita            ###   ########.fr       */
+/*   Created: 2026/02/11 17:29:49 by abita             #+#    #+#             */
+/*   Updated: 2026/02/17 14:01:08 by abita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
-# include <unistd.h>
-# include <stdint.h>
-# include <stdlib.h>
+#include "cub.h"
 
-# ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 4096
-# endif
-
-char	*get_next_line(int fd);
-
-#endif
+void	print_error(const char *msg)
+{
+	write(STDERR_FILENO, RED, 5);
+	write(STDERR_FILENO, msg, ft_strlen(msg));
+	write(STDERR_FILENO, RED, 5);
+}
