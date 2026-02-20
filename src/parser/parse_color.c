@@ -6,7 +6,7 @@
 /*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 14:00:00 by abita             #+#    #+#             */
-/*   Updated: 2026/02/20 20:27:08 by abita            ###   ########.fr       */
+/*   Updated: 2026/02/20 22:47:13 by abita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ static int	get_color_range(char *line)
 	char	**split;
 	int		rgb[3];
 	int		color;
+	int		comma;
 
 	i = 0;
 	while (line[i] == ' ' || line[i] == '\t')
@@ -58,6 +59,15 @@ static int	get_color_range(char *line)
 	i += 1;
 	while (line[i] == ' ' || line[i] == '\t')
 		i++;
+	comma = 0;
+	while (line[i])
+	{
+		if (line[i] == ',')
+			comma++;
+		i++;
+	}
+	if (comma == 3)
+		return (-1);
 	char *trim = ft_strtrim(&line[i], "\n \t");
 	if (!trim)
 		return (-1);
