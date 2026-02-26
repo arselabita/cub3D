@@ -6,7 +6,7 @@
 /*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/16 13:55:41 by abita             #+#    #+#             */
-/*   Updated: 2026/02/19 15:49:48 by abita            ###   ########.fr       */
+/*   Updated: 2026/02/24 20:12:02 by abita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,19 +47,43 @@ int	is_valid_map(char *line, t_line *map)
 	return (1);
 }
 
-int	is_valid_row(char *line)
+int	is_valid_row(char *line, t_line *map)
 {
 	int	len;
+	char **mat;
+	(void)map;
 
 	if (!line)
 		return (0);
 	len = 0;
 	while (line[len] && line[len] != '\n')
 		len++;
+	
+/////////////////////////////////////////////////
+
+
+	mat = ft_split(line, '\n');
+	if (!mat)
+		return(free(mat), 1);
+	
+	int N = sizeof(mat) / sizeof(mat[0]);
+    int M = sizeof(mat[0]) / sizeof(mat[0][0]);	
+	for(int i = 0; i < N * M; i++)
+	{
+		int row  = i / M;
+		int col = i % M;
+		printf("%c\n", mat[row][col]);
+		free(mat[i]);
+	}
+	free(mat);	
+	// printf("len: %i\n", len);
+	// printf("line[%i]: %s\n", len, line);
 	if (line[0] != WALL)
 		return (0);
 	if (line[len - 1] != WALL)
 		return (0);
+	// printf("last row: %s", map->last_map_line);
+	
 	return (1);
 }
 
@@ -85,7 +109,8 @@ int	parse_map_line(char *line, t_line *map)
 	}
 	free(map->last_map_line);
 	map->last_map_line = ft_strdup(&line[i]);
-	if (!is_valid_row(&line[i]))
+	if (!is_valid_row(&line[i], map))
 		map->error = 1;
+
 	return (EXIT_SUCCESS);
 }
