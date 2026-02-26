@@ -6,7 +6,7 @@
 /*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 15:48:25 by abita             #+#    #+#             */
-/*   Updated: 2026/02/18 16:01:07 by abita            ###   ########.fr       */
+/*   Updated: 2026/02/20 21:07:57 by abita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,21 +56,6 @@ static char	*word_copy(char const *s, int start, int end)
 	return (word);
 }
 
-static int	save_the_word(char **split, int j)
-{
-	if (!split[j])
-	{
-		while (j < 0)
-		{
-			j--;
-			free(split[j]);
-		}
-		free(split);
-		return (0);
-	}
-	return (1);
-}
-
 static void	check(char const *s, char c, int *i, int *start)
 {
 	while (s[*i] && s[*i] == c)
@@ -78,6 +63,21 @@ static void	check(char const *s, char c, int *i, int *start)
 	*start = *i;
 	while (s[*i] && s[*i] != c)
 		(*i)++;
+}
+void	free_split1(char **split)
+{
+	size_t	i;
+
+	i = 0;
+	if (!split)
+		return ;
+	while (split[i])
+	{
+		free(split[i]);
+		split[i] = NULL;
+		i++;
+	}
+	free(split);
 }
 
 char	**ft_split(char const *s, char c)
@@ -101,13 +101,12 @@ char	**ft_split(char const *s, char c)
 		if (start < i)
 		{
 			split[j] = word_copy(s, start, i);
-			if (!save_the_word(split, j))
-				return (NULL);
+			if (!split[j])
+				return (free_split1(split), NULL);
 			j++;
 		}
 	}
-	split[j] = NULL;
-	return (split);
+	return (split[j] = NULL, split);
 }
 
 // int main()

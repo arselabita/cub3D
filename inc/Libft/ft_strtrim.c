@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abita <abita@student.42vienna.com>         +#+  +:+       +#+        */
+/*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/29 17:15:04 by abita             #+#    #+#             */
-/*   Updated: 2025/04/29 17:15:07 by abita            ###   ########.fr       */
+/*   Updated: 2026/02/20 20:35:15 by abita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,21 +40,21 @@ char	*ft_strtrim(char const *s1, char const *set)
 	return (str);
 }
 
-int main()
-{
-	char	str[] = "ter array must end with a NULL pointer";
-	char	rem_chr[] = "ter";
-	char	*trimed_str;
+// int main()
+// {
+// 	char	str[] = "ter array must end with a NULL pointer";
+// 	char	rem_chr[] = "ter";
+// 	char	*trimed_str;
 
-	trimed_str = ft_strtrim(str, rem_chr);
-	if (trimed_str)
-	{
-		printf("the string: %s\n", str);
-		printf("the char to remove: %s\n", rem_chr);
-		printf("trimed string: %s\n", trimed_str);
-		free(trimed_str);
-	}
-	else
-		printf("Memory allocation failed.\n");
-	return (0);
-}
+// 	trimed_str = ft_strtrim(str, rem_chr);
+// 	if (trimed_str)
+// 	{
+// 		printf("the string: %s\n", str);
+// 		printf("the char to remove: %s\n", rem_chr);
+// 		printf("trimed string: %s\n", trimed_str);
+// 		free(trimed_str);
+// 	}
+// 	else
+// 		printf("Memory allocation failed.\n");
+// 	return (0);
+// }

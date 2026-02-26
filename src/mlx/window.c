@@ -6,7 +6,7 @@
 /*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 15:28:55 by abita             #+#    #+#             */
-/*   Updated: 2026/02/16 14:29:16 by abita            ###   ########.fr       */
+/*   Updated: 2026/02/20 21:08:23 by abita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ void	init_window_and_display(t_data *data)
 	data->img.img = NULL;
 
 	data->mlx = mlx_init();
+	// data->mlx  = NULL;
 	if (!data->mlx)
 		exit (EXIT_FAILURE);
 	data->win = mlx_new_window(data->mlx, WIDTH, HEIGHT, "Cub3D");

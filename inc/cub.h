@@ -6,7 +6,7 @@
 /*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 16:15:08 by abita             #+#    #+#             */
-/*   Updated: 2026/02/20 14:29:24 by abita            ###   ########.fr       */
+/*   Updated: 2026/02/24 12:44:01 by abita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@
 # define NORTH 'N'
 # define SOUTH 'S'
 # define EAST 'E'
-
+# define WEST 'W'
 ////////////////////////////////////////////////////////////////////////////////
 /* ************************************************************************** */
 /*                                   ENUM Error FD                            */
@@ -137,6 +137,7 @@ typedef struct s_texture_data
 	int so;
 	int we;
 	int ea;
+	int fd;
 } t_texture_data;
 
 
@@ -169,7 +170,7 @@ int	parser(char *path, t_line *map, t_color_data *c_data, t_texture_data *t_data
 
 // map //
 int			parse_map_line(char *line, t_line *map);
-int			is_valid_row(char *line);
+int			is_valid_row(char *line, t_line *map);
 int			is_valid_map(char *line, t_line *map);
 
 // textures //
