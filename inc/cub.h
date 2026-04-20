@@ -6,7 +6,7 @@
 /*   By: arselabita <arselabita@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 16:15:08 by abita             #+#    #+#             */
-/*   Updated: 2026/04/20 15:55:48 by arselabita       ###   ########.fr       */
+/*   Updated: 2026/04/20 16:12:41 by arselabita       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,7 +171,6 @@ typedef struct s_line
 	int			height;
 	int			player_count;
 	int			map_started;
-	//t_player	player;
 }				t_line;
 
 typedef struct s_data
@@ -262,5 +261,9 @@ int			parse_texture(char *line, t_texture_data *t_data);
 
 // color //
 int			parse_color(char *line, t_color_data *c_data);
+
+// utils
+void cleanup(t_data *data);
+
 
 #endif
