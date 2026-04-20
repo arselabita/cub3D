@@ -4,3 +4,4 @@ map.cub
 map_task.txt
 test.c
 a.out
+ inc/cub.h
