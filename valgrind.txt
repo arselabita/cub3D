@@ -1,0 +1,19 @@
+==46209== 82,598 bytes in 829 blocks are still reachable in loss record 57 of 57
+==46209==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==46209==    by 0x404B54: ft_strdup (in /home/abita/Desktop/cub3D/cub)
+==46209==    by 0x401CCF: creating_2d_map (map_utils.c:70)
+==46209==    by 0x4027FC: map_parsing (parse_map.c:79)
+==46209==    by 0x40245B: parse_input (parser.c:59)
+==46209==    by 0x4021F9: parser (parser.c:76)
+==46209==    by 0x4013BA: input_validity (main.c:44)
+==46209==    by 0x401428: main (main.c:57)
+==46209== 
+==46209== LEAK SUMMARY:
+==46209==    definitely lost: 0 bytes in 0 blocks
+==46209==    indirectly lost: 0 bytes in 0 blocks
+==46209==      possibly lost: 0 bytes in 0 blocks
+==46209==    still reachable: 205,128 bytes in 937 blocks
+==46209==         suppressed: 0 bytes in 0 blocks
+==46209== 
+==46209== For lists of detected and suppressed errors, rerun with: -s
+==46209== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
