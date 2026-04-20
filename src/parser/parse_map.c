@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arselabita <arselabita@student.42.fr>      +#+  +:+       +#+        */
+/*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 15:41:07 by abita             #+#    #+#             */
-/*   Updated: 2026/04/18 17:40:14 by arselabita       ###   ########.fr       */
+/*   Updated: 2026/04/18 20:40:22 by abita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,18 +34,12 @@ int grid_validation(char **grid, int height, t_line *map)
 			{
 				map->player.x = x;
 				map->player.y = y;
+				map->player_count++;
+				if (map->player_count != 1)
+					return (printf("ERROR: more than one player\n"), EXIT_FAILURE);
 			}
-            if (grid[y][x] == '0')
+            if (grid[y][x] == '0' || is_player(grid[y][x]))
             {
-				if (is_player(grid[y][x]))
-				{
-					map->player_count++;
-					if (map->player_count != 1)
-					{
-						printf("ERROR: more than one player\n");
-						return (EXIT_FAILURE);
-					}
-				}
 				if (y == 0 || x == 0 || y == height -1 || 
 					x == (int)ft_strlen(grid[y]) - 1)
 					{
@@ -68,6 +62,8 @@ int grid_validation(char **grid, int height, t_line *map)
         }
         y++;
     }
+	if (map->player_count != 1)
+		return (EXIT_FAILURE);
     return (EXIT_SUCCESS);
 }
 
@@ -77,8 +73,6 @@ int map_parsing(char *line, t_line *map)
 	char  *clean_line;
 
 	i = 0;
-	while(ft_isspace(line[i]))
-		i++;
 	if (line[i] == '\0')
 		return (EXIT_FAILURE);
 	clean_line = ft_strtrim(&line[i], "\n");

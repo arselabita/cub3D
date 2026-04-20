@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   parse_texture.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arselabita <arselabita@student.42.fr>      +#+  +:+       +#+        */
+/*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 11:56:47 by abita             #+#    #+#             */
-/*   Updated: 2026/04/17 20:21:58 by arselabita       ###   ########.fr       */
+/*   Updated: 2026/04/18 20:37:09 by abita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/cub.h"
+
+
 
 static int	get_id_type(char *line)
 {
@@ -61,21 +63,23 @@ int	parse_texture(char *line, t_texture_data *t_data)
 		return (-1);
 	slash = ft_strrchr(path, '/');
 	if (slash && slash[1] == '.')
-		return (printf("error: this is a hidden path\n"), EXIT_FAILURE);
+	{
+		printf("error: this is a hidden path\n");
+		return (EXIT_FAILURE);
+	}
 	dot = ft_strrchr(path, '.');
 	if (!dot || ft_strcmp(dot, ".xpm") != 0)
 		return (printf("error: .xpm exe\n"), EXIT_FAILURE);
-	t_data->fd = open(path, O_RDONLY);
 	if (id == -1)
 		return (-1);
 	if (id == NO)
-		t_data->no = t_data->fd;
+		t_data->no = path;
 	if (id == SO)
-		t_data->so = t_data->fd;
+		t_data->so = path;
 	if (id == WE)
-		t_data->we = t_data->fd;
+		t_data->we = path;
 	if (id == EA)
-		t_data->ea = t_data->fd;
+		t_data->ea = path;
 	free(path);
 	return (EXIT_SUCCESS);
 }

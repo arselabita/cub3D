@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arselabita <arselabita@student.42.fr>      +#+  +:+       +#+        */
+/*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/16 13:56:33 by abita             #+#    #+#             */
-/*   Updated: 2026/04/18 17:51:23 by arselabita       ###   ########.fr       */
+/*   Updated: 2026/04/18 20:16:30 by abita            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,16 @@ int	is_valid_input(char line)
 	return (line == SPACE || line == WALL || line == NORTH || line == SOUTH
 		|| line == EAST || line == WEST || line == ' ' || line == '\t');
 }
-int	is_player(char line)
+int is_player(char type)
 {
-	return (line == NORTH || line == SOUTH || line == EAST || line == WEST);
+	int i;
+
+	i = 0;
+	if (type == WEST || type == EAST || type == NORTH || type == SOUTH)
+		i = 1;
+	else
+		i = 0;
+	return (i);
 }
 int	is_valid(char line)
 {
