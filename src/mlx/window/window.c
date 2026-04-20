@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   window.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arselabita <arselabita@student.42.fr>      +#+  +:+       +#+        */
+/*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/11 15:28:55 by abita             #+#    #+#             */
-/*   Updated: 2026/04/13 15:38:59 by arselabita       ###   ########.fr       */
+/*   Updated: 2026/04/19 17:51:36 by milija-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,10 @@ void	my_pixel_put(t_img img, int x, int y, int color)
 
 void	mlx_loop_helper(t_data *data)
 {
-	mlx_hook(data->win, 2, 1L << 0, keyhandler, data);
+	mlx_hook(data->win, 2, 1L<<0, keyhandler, data);
+	mlx_hook(data->win, 3, 1L<<1, key_release, data);
 	mlx_hook(data->win, 17, 1L << 2, ft_exit, data);
+	mlx_loop_hook(data->mlx, render_loop, data);
 	mlx_loop(data->mlx);
 }
 
@@ -59,9 +61,8 @@ void	init_window_and_display(t_data *data)
 	data->mlx = NULL;
 	data->win = NULL;
 	data->img.img = NULL;
-
 	data->mlx = mlx_init();
-	// data->mlx  = NULL;
+	//data->mlx  = NULL;
 	if (!data->mlx)
 		exit (EXIT_FAILURE);
 	data->win = mlx_new_window(data->mlx, WIDTH, HEIGHT, "Cub3D");

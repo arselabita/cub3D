@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
+/*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/13 15:41:07 by abita             #+#    #+#             */
-/*   Updated: 2026/04/18 20:40:22 by abita            ###   ########.fr       */
+/*   Updated: 2026/04/19 18:10:13 by milija-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,6 @@ int grid_validation(char **grid, int height, t_line *map)
         {
 			if (is_player(grid[y][x]))
 			{
-				map->player.x = x;
-				map->player.y = y;
 				map->player_count++;
 				if (map->player_count != 1)
 					return (printf("ERROR: more than one player\n"), EXIT_FAILURE);
@@ -63,7 +61,7 @@ int grid_validation(char **grid, int height, t_line *map)
         y++;
     }
 	if (map->player_count != 1)
-		return (EXIT_FAILURE);
+		return (printf("ERROR: more than or less than one player\n"), EXIT_FAILURE);
     return (EXIT_SUCCESS);
 }
 

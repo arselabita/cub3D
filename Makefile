@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: abita <abita@student.42.fr>                +#+  +:+       +#+         #
+#    By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/02/11 14:58:16 by abita             #+#    #+#              #
-#    Updated: 2026/04/18 17:16:50 by abita            ###   ########.fr        #
+#    Updated: 2026/04/19 13:51:23 by milija-h         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,8 +29,8 @@ RESET = \033[0m
 
 SRCS = \
 	  main.c \
-	  mlx/keys.c \
-	  mlx/window.c \
+	  mlx/key/keys.c \
+	  mlx/window/window.c \
 	  utils/map_utils.c \
 	  utils/parse_utils.c \
 	  utils/return_utils.c \
@@ -38,6 +38,15 @@ SRCS = \
 	  parser/parse_map.c \
 	  parser/parse_color.c \
 	  parser/parse_texture.c \
+	  mlx/init_player/player.c \
+	  mlx/grid.c \
+	  mlx/dda/dda_utils.c \
+	  mlx/dda/dda_loop.c  \
+	  mlx/dda/render.c \
+	  mlx/dda/render_utils.c \
+	  mlx/textures/textures.c \
+	  mlx/movement/movement.c \
+	  
 
 OBJS = $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
 
@@ -46,7 +55,6 @@ OBJS = $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
 # ==========================
 
 all: $(LIBFT) $(NAME)
-	@echo "$(GREEN)Building Cub3D...$(RESET)"
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c inc/cub.h
 	@mkdir -p $(dir $@)
@@ -54,6 +62,7 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c inc/cub.h
 
 
 $(NAME): $(OBJS)
+	@echo "$(GREEN)Compiling Cub3D...$(RESET)"
 	@$(CC) $(CFLAGS) $(OBJS) $(LIBFT) $(LIBS) -o $(NAME)
 
 

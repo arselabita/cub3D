@@ -1,0 +1,157 @@
+CUB3D TEXTURE MAPPING (CLEAR + PRACTICAL)
+
+1. WHAT YOU ARE DOING
+You draw the screen column by column.
+Each column = 1 ray hitting a wall.
+
+Instead of flat color, you draw a texture.
+
+
+----------------------------------------
+
+2. YOUR TEXTURE STRUCT (KEEP IT)
+
+typedef struct s_texture
+{
+    void    *img;
+    char    *addr;
+    int     width;
+    int     height;
+    int     bpp;
+    int     line_len;
+    int     endian;
+}   t_texture;
+
+Meaning:
+addr      → raw pixels
+width     → texture width (ex: 64)
+height    → texture height (ex: 64)
+line_len  → bytes per row
+bpp       → bits per pixel (usually 32)
+
+
+----------------------------------------
+
+3. CORE IDEA (VERY IMPORTANT)
+
+You are STRETCHING a texture on a wall.
+
+Example:
+wall on screen = 200 pixels tall
+texture = 64 pixels tall
+
+So:
+200 screen pixels → must map to 64 texture pixels
+
+
+----------------------------------------
+
+4. THE KEY FORMULA
+
+step = texture_height / line_height
+
+Meaning:
+Each time you go DOWN 1 pixel on screen,
+you move "step" inside the texture.
+
+
+----------------------------------------
+
+5. HOW tex_y IS COMPUTED
+
+For each pixel y:
+
+tex_y = (y - draw_start) * step
+
+Where:
+draw_start = top of the wall on screen
+
+So:
+top of wall → tex_y = 0
+bottom → tex_y = texture height
+
+
+----------------------------------------
+
+6. HOW MEMORY ACCESS WORKS
+
+Images are stored in 1D arrays.
+
+To access a pixel:
+
+index = y * line_len + x * (bpp / 8)
+
+So:
+
+SCREEN:
+img->addr[y * img->line_len + x * (bpp/8)]
+
+TEXTURE:
+texture->addr[tex_y * texture->line_len + tex_x * (bpp/8)]
+
+
+----------------------------------------
+
+7. WHAT texture_on_img REALLY DOES
+
+For EACH pixel of a vertical line:
+
+1. get tex_x (from wall hit)
+2. compute tex_y
+3. copy pixel from texture → screen
+
+
+----------------------------------------
+
+8. FULL FLOW (IMPORTANT)
+
+For each column x:
+
+1. cast ray
+2. compute distance
+3. compute line_height
+4. compute draw_start / draw_end
+5. compute tex_x
+6. loop y from draw_start → draw_end:
+    → compute tex_y
+    → copy texture pixel
+
+
+----------------------------------------
+
+9. COMMON BUGS (VERY IMPORTANT)
+
+- using width instead of line_len → BROKEN COLORS
+- not clearing image → GREEN TRAILS
+- wrong tex_y → STRETCHED WALLS
+- wrong indexing → MEMORY CORRUPTION
+
+
+----------------------------------------
+
+10. SIMPLE WAY TO THINK
+
+You are doing:
+
+screen_y → texture_y
+
+That’s it.
+
+
+----------------------------------------
+
+11. FINAL FORMULAS
+
+step = texture_height / line_height
+
+tex_y = (y - draw_start) * step
+
+pixel_index = y * line_len + x * (bpp / 8)
+
+
+----------------------------------------
+
+END
+startxref
+3115
+%%EOF

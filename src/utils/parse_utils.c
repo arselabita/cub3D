@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abita <abita@student.42.fr>                +#+  +:+       +#+        */
+/*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/17 14:06:52 by abita             #+#    #+#             */
-/*   Updated: 2026/04/14 20:41:23 by abita            ###   ########.fr       */
+/*   Updated: 2026/04/19 17:59:45 by milija-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,4 +74,5 @@ void	free_split(char **split)
 		i++;
 	}
 	free(split);
+	split = NULL;
 }

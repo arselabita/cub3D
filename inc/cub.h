@@ -6,7 +6,7 @@
 /*   By: arselabita <arselabita@student.42.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/05 16:15:08 by abita             #+#    #+#             */
-/*   Updated: 2026/04/18 17:36:05 by arselabita       ###   ########.fr       */
+/*   Updated: 2026/04/20 15:55:48 by arselabita       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,9 @@
 # define RESET_COLOR "\033[0m"
 
 // scaling
-# define WIDTH 400
-# define HEIGHT 400
+# define WIDTH 900
+# define HEIGHT 900
+# define TILE_SIZE 40
 
 // arrow keys
 # define LEFT 65361
@@ -48,10 +49,11 @@
 # define SOUTH 'S'
 # define EAST 'E'
 # define WEST 'W'
-////////////////////////////////////////////////////////////////////////////////
+
 /* ************************************************************************** */
 /*                                   ENUM Error FD                            */
 /* ************************************************************************** */
+
 typedef enum e_return_values
 {
 	ERROR = -1,
@@ -59,7 +61,7 @@ typedef enum e_return_values
 	ERROR_OPENING_FILE = -3,
 	ERROR_INVALID_MAP = -4,
 	ERROR_MALLOC = -5
-}			e_return_values;
+}			t_return_values;
 
 /* ************************************************************************** */
 /*                             ENUM Texture Types                             */
@@ -81,10 +83,51 @@ typedef enum e_color_type
 	C = 12
 }			t_color_type;
 
-////////////////////////////////////////////////////////////////////////////////
+/* ************************************************************************** */
+/*                                   PLAYER                                   */
+/* ************************************************************************** */
+
+typedef struct s_player
+{
+	float		pos_x; //position in the world space
+	float		pos_y;
+	float		m_pos_x;; // updated position in the world space
+	float		m_pos_y;
+	float		dir_x; //direction vectoor (where the player looks)
+	float		dir_y;
+	float		plane_x; //camera plane (perpendicular to FOV)
+	float		plane_y;
+	float		camera_x; //raycasting per column
+	float		ray_dir_x;
+	float		ray_dir_y;
+	int			map_x; // current map tile
+	int			map_y;
+	int			step_x; //dda step direction
+	int			step_y;
+	float		delta_dist_x; //distance between grid crossings
+	float		delta_dist_y;
+	float		side_dist_x; //distance to next grid crossing
+	float		side_dist_y;
+	float		perp_wall_dist;
+	float		wall_x; //exact coordinate where the ray hits the wall
+	int			side; // wal info (1 = wall, 0 = space)
+	double		move_speed;
+	double		rot_speed;
+	float		new_dir_x;
+	float		new_dir_y;
+	
+	int			texture_y;
+	int			texture_x;
+	bool		key_up;
+	bool		key_down;
+	bool		key_right;
+	bool		key_left;
+}				t_player;
+
 /* ************************************************************************** */
 /*                                   MLX Struct                               */
 /* ************************************************************************** */
+
 typedef struct s_img
 {
 	void	*img;
@@ -94,21 +137,30 @@ typedef struct s_img
 	int		endian;
 }			t_img;
 
-typedef struct s_data
-{
-	t_img	img;
-	void	*mlx;
-	void	*win;
-	int		i;
-}			t_data;
+/* ************************************************************************** */
+/*                                   Texture Struct	                          */
+/* ************************************************************************** */
 
-
-typedef struct s_player
+typedef struct s_texture_data
 {
-	int y;
-	int x;
-	
-} t_player;
+	char	*no; //stores path to texture path of the given direction
+	char	*so;
+	char	*we;
+	char	*ea;
+	char	*fd;
+}			t_texture_data;
+
+typedef struct s_texture
+{
+	void		*img;
+	char		*addr;
+	int			width;
+	int			height;
+	int			bpp;
+	int			line_len;
+	int			endian;
+	t_player	*texture_data;
+}				t_texture;
 
 /* ************************************************************************** */
 /*                                   FD_line Struct							  */
@@ -119,9 +171,18 @@ typedef struct s_line
 	int			height;
 	int			player_count;
 	int			map_started;
-	t_player	player;
-}			t_line;
+	//t_player	player;
+}				t_line;
 
+typedef struct s_data
+{
+	t_img		img;
+	void		*mlx;
+	void		*win;
+	int			i;
+	t_line		*line;
+	t_player	*player;
+}				t_data;
 
 /* ************************************************************************** */
 /*                                   Color Struct                             */
@@ -133,21 +194,6 @@ typedef struct s_color_data
 	int		ceiling_color;
 }			t_color_data;
 
-
-/* ************************************************************************** */
-/*                                   Texture Struct	                          */
-/* ************************************************************************** */
-
-typedef struct s_texture_data
-{
-	int no;
-	int so;
-	int we;
-	int ea;
-	int fd;
-} t_texture_data;
-
-
 ////////////////////////////////////////////////////////////////////////////////
 /* ************************************************************************** */
 /*                                   MLX Window                               */
@@ -156,7 +202,8 @@ typedef struct s_texture_data
 void		init_window_and_display(t_data *data);
 void		my_pixel_put(t_img img, int x, int y, int color);
 void		mlx_loop_helper(t_data *data);
-int			keyhandler(int key, t_data *data);
+int			keyhandler(int keycode, void *param);
+int			key_release(int keycode, void *param);
 int			ft_exit(t_data *data);
 int			ft_exit_error(t_data *data);
 
@@ -176,11 +223,36 @@ int			is_color_line(char *line);
 void		free_split(char **split);
 
 /* ************************************************************************** */
+/*                                  Executor                                  */
+/* ************************************************************************** */
+
+void		init_player(t_player *player, t_line *map);
+void		render_grid(t_data *data, t_player *player, char **map);
+void		define_step_len(t_player *player);
+void		define_step_len(t_player *player);
+void		camera_position(t_player *player, int x);
+void		exact_position_in_cell(t_player *player);
+void		distance_to_next_tile(t_player *player);
+void		advance_to_next_grid(t_player *player, char **map);
+void		perpendicular_wall_distance(t_player *player);
+void		contact_position(t_player *player);
+void		texture_column(t_player *player, int tex_width);
+void		draw_wall_strip(t_data *data, t_player *player, int x);
+void		render_frame(t_data *data, t_line *map, t_player *player);
+int			render_loop(void *param);
+//void		texture_file(t_data *data, t_texture_data *texture, void **image);
+void		update_player(t_player *p, char **map, double frame_time);
+void		rotate_player(t_player *p, double rot_speed, int dir);
+void		move_forward_backward(t_player *p, double move_speed, char **map, int dir);
+void		compute_speed(t_player *p, double frame_time);
+double		get_time_in_ms(void);
+
+/* ************************************************************************** */
 /*                                  Parser                                    */
 /* ************************************************************************** */
 
-int	parser(char *path, t_line *map, t_color_data *c_data, t_texture_data *t_data);
-int grid_validation(char **grid, int height, t_line *map);
+int			parser(char *path, t_line *map, t_color_data *c_data, t_texture_data *t_data);
+int 		grid_validation(char **grid, int height, t_line *map);
 
 // map //
 int			map_parsing(char *line, t_line *map);
