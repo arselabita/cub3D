@@ -6,26 +6,16 @@
 #    By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/02/11 14:58:16 by abita             #+#    #+#              #
-#    Updated: 2026/04/24 16:58:03 by milija-h         ###   ########.fr        #
+#    Updated: 2026/04/25 14:17:02 by milija-h         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
+MAKEFLAGS += --no-print-directory
 NAME = cub3D
 
 CC = cc 
 CFLAGS = -Wall -Werror -Wextra -g
-
-LIBFT_DIR   = inc/Libft
-LIBFT       = $(LIBFT_DIR)/libft.a
-INCLUDES    = -I inc -I $(LIBFT_DIR)
-
 LIBS = -lmlx -lX11 -lXext -lm
-
-SRC_DIR     = src
-OBJ_DIR     = obj
-
-GREEN = \033[0;32m
-RESET = \033[0m
 
 SRCS = \
 	  main.c \
@@ -46,46 +36,46 @@ SRCS = \
 	  mlx/textures/textures.c \
 	  mlx/movement/movement.c \
 	  mlx/textures/texture_utils.c \
-	  
 
-OBJS = $(addprefix $(OBJ_DIR)/, $(SRCS:.c=.o))
+OBJ = $(SRC:.c=.o)
 
-# ==========================
-# Build rules
-# ==========================
+LIBFT_DIR = inc/Libft
+LIBFT = $(LIBFT_DIR)/libft.a
+
+SILENT ?=0
+GREEN = \033[0;32m
+PURPLE = \033[1;35m
+CYAN = \033[0;36m
+RED = \033[1;31m
+RESET = \033[0m
+
+%.o: %.c
+	@$(CC) $(CFLAGS) -c $< -o $@
 
 all: $(LIBFT) $(NAME)
 
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c inc/cub.h
-	@mkdir -p $(dir $@)
-	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
-
-
-$(NAME): $(OBJS)
-	@echo "$(GREEN)Compiling Cub3D...$(RESET)"
-	@$(CC) $(CFLAGS) $(OBJS) $(LIBFT) $(LIBS) -o $(NAME)
-
-
 $(LIBFT):
-	@$(MAKE) -s -C $(LIBFT_DIR) all
+	@make -C $(LIBFT_DIR)
 
-# ==========================
-# Clean rules
-# ==========================
+$(NAME): $(OBJ) $(LIBFT)
+	@if [ "$(SILENT)" = "0" ]; then echo "$(GREEN)compiling...$(RESET)"; fi
+	@$(CC) $(CFLAGS) $(OBJ) $(LIBFT) $(LDLIBS) -o $(NAME)
+	@if [ "$(SILENT)" = "0" ]; then  echo "$(GREEN)ready to execute$(RESET)"; fi
 
 clean:
-	@echo "$(GREEN)Cleaning object files...$(RESET)"
-	@rm -f $(OBJS)
-	@$(MAKE) -s -C $(LIBFT_DIR) clean
-
+	@if [ "$(SILENT)" = "0" ]; then echo "$(CYAN)deleting object files...$(RESET)"; fi
+	@rm -f $(OBJ)
+	@$(MAKE) -C $(LIBFT_DIR) clean
+	@if [ "$(SILENT)" = "0" ]; then echo "$(CYAN)done$(RESET)"; fi
 fclean: clean
-	@echo "$(GREEN)Full clean...$(RESET)"
+	@if [ "$(SILENT)" = "0" ]; then echo "$(RED)fully cleaning...$(RESET)"; fi
 	@rm -f $(NAME)
-	@rm -rf $(OBJ_DIR)
-	@$(MAKE) -s -C $(LIBFT_DIR) fclean
+	@$(MAKE) -C $(LIBFT_DIR) fclean
+	@if [ "$(SILENT)" = "0" ]; then echo "$(RED)done$(RESET)"; fi
+re:
+	@echo "$(GREEN)re(making)...$(RESET)"
+	@$(MAKE) SILENT=1 fclean
+	@$(MAKE) SILENT=1 all
+	@echo "$(GREEN)done, ready to execute again$(RESET)"
 
-re: fclean all
-	@echo "$(GREEN)Rebuilding done...$(RESET)"
-
-.PHONY: all debug clean fclean re
-.SILENT:
+.PHONY: all clean fclean re
