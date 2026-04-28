@@ -6,7 +6,7 @@
 /*   By: milija-h <milija-h@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/04/15 18:04:38 by milija-h          #+#    #+#             */
-/*   Updated: 2026/04/26 18:54:35 by milija-h         ###   ########.fr       */
+/*   Updated: 2026/04/28 12:25:02 by milija-h         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,8 @@ static void	init_tex_column(t_data *data, int wall_height)
 		data->text_column->draw_end = HEIGHT - 1;
 	data->text_column->texture_x = (int)(data->player->wall_x
 			* data->text_column->texture->width);
-	if ((data->player->side == 0 && data->player->ray_dir_x > 0)
-		|| (data->player->side == 1 && data->player->ray_dir_y < 0))
+	if ((data->player->side == 0 && data->player->ray_dir_x < 0)
+    	|| (data->player->side == 1 && data->player->ray_dir_y > 0))
 		data->text_column->texture_x = data->text_column->texture->width
 			- data->text_column->texture_x - 1;
 	data->text_column->step = (float)data->text_column->texture->height / (wall_height * 2);
